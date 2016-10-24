@@ -1,8 +1,10 @@
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 
-public class Permutations {
+public class Permutations2 {
 
     public void swap(int[] nums, int i, int j) {
         int temp = nums[i];
@@ -18,25 +20,25 @@ public class Permutations {
             }
             res.add(cur);
         } else {
+            HashSet<Integer> hashSet = new HashSet<Integer>();
             for (int i = idx; i < nums.length; i++) {
-                swap(nums, i, idx);
-                help(res, nums, idx + 1);
-                swap(nums, i, idx);
+                if (!hashSet.contains(nums[i])) {
+                    swap(nums, i, idx);
+                    help(res, nums, idx + 1);
+                    swap(nums, i, idx);
+                    hashSet.add(nums[i]);
+                }
             }
         }
     }
 
     /**
      * @param nums: A list of integers.
-     * @return: A list of permutations.
+     * @return: A list of unique permutations.
      */
-    public List<List<Integer>> permute(int[] nums) {
+    public List<List<Integer>> permuteUnique(int[] nums) {
+        Arrays.sort(nums);
         List<List<Integer>> res = new ArrayList<List<Integer>>();
-        if (nums.length == 0) {
-            List<Integer> empty = new ArrayList<Integer>();
-            res.add(empty);
-            return res;
-        }
         help(res, nums, 0);
         return res;
     }

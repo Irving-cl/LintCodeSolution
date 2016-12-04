@@ -1,16 +1,13 @@
 
-import java.util.ArrayList;
-import java.util.Map;
-import java.util.Stack;
-import java.util.TreeMap;
+import java.util.*;
 
-public class ConvertExpressionToReversePolishNotation {
+public class ExpressionEvaluation {
 
     /**
-     * @param expression: A string array
-     * @return: The Reverse Polish notation of this expression
+     * @param expression: an array of strings;
+     * @return: an integer
      */
-    public ArrayList<String> convertToRPN(String[] expression) {
+    public int evaluateExpression(String[] expression) {
         ArrayList<String> ans = new ArrayList<String>();
         Stack<String> stack = new Stack<String>();
         Map<String, Integer> p = new TreeMap<String, Integer>();
@@ -41,7 +38,29 @@ public class ConvertExpressionToReversePolishNotation {
         while (stack.size() > 1) {
             ans.add(stack.pop());
         }
-        return ans;
+        Stack<Integer> nums = new Stack<Integer>();
+        for (int i = 0; i < ans.size(); i++) {
+            if (ans.get(i).compareTo("+") == 0) {
+                int a = nums.pop();
+                int b = nums.pop();
+                nums.push(b + a);
+            } else if (ans.get(i).compareTo("-") == 0) {
+                int a = nums.pop();
+                int b = nums.pop();
+                nums.push(b - a);
+            } else if (ans.get(i).compareTo("*") == 0) {
+                int a = nums.pop();
+                int b = nums.pop();
+                nums.push(b * a);
+            } else if (ans.get(i).compareTo("/") == 0) {
+                int a = nums.pop();
+                int b = nums.pop();
+                nums.push(b / a);
+            } else {
+                nums.push(Integer.valueOf(ans.get(i)));
+            }
+        }
+        return nums.isEmpty() ? 0 : nums.peek();
     }
 
     public static void main(String[] args) {

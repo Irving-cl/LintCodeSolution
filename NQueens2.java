@@ -8,7 +8,7 @@ public class NQueens2 {
     int cnt;
 
     public void dfs(int idx, int n) {
-        if (idx == qy.size()) {
+        if (idx == n) {
             cnt++;
             return;
         }

@@ -2,3 +2,5 @@ language: java
 
 install: true
 
+script: ./scripts/run-tests.sh
+
